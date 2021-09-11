@@ -70,7 +70,7 @@ export default class Cart {
         const existingItem = this.findItem(item);
 
         if (existingItem) {
-            existingItem.quantity++;
+            existingItem.quantity += item.quantity;
         } else {
             this.items.push(item);
         }
