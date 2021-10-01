@@ -45,7 +45,7 @@ export default class Cart {
 
     public message?: string;
 
-    protected items: OrderItemInput[];
+    public items: OrderItemInput[];
 
     constructor() {
         this.type = "takeout";
