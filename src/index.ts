@@ -84,22 +84,28 @@ export default class Cart {
     }
 
     findItem(item: OrderItemInputV3): OrderItemInputV3 | undefined {
-        return this.items.find(i => {
-            const sameType = i.item_type === item.item_type;
-            const sameId = i.item_id === item.item_id;
+        return this.items.find(i => this.itemsEq(i, item));
+    }
 
-            let sameSubitems = i.subitems.length === item.subitems.length;
-            if (sameSubitems) {
-                for (const iSubitem of i.subitems) {
-                    if (!item.subitems.find(subitem => subitem.item_type === iSubitem.item_type && subitem.item_id === iSubitem.item_id)) {
-                        sameSubitems = false;
-                        break;
-                    }
+    itemsEq(item1: OrderItemInputV3, item2: OrderItemInputV3): boolean {
+        const sameType = item1.item_type === item2.item_type;
+        const sameId = item1.item_id === item2.item_id;
+
+        let sameSubitems = item1.subitems.length === item2.subitems.length;
+        if (sameSubitems) {
+            for (const iSubitem of item1.subitems) {
+                if (!item2.subitems.find(subitem => this.subitemsEq(subitem, iSubitem))) {
+                    sameSubitems = false;
+                    break;
                 }
             }
+        }
 
-            return sameType && sameId && sameSubitems;
-        });
+        return sameType && sameId && sameSubitems;
+    }
+
+    subitemsEq(subitem1: OrderSubitemInputV3, subitem2: OrderSubitemInputV3): boolean {
+        return subitem1.item_type === subitem2.item_type && subitem1.item_id === subitem2.item_id;
     }
 
     buildOrder(): OrderInputV3 {
