@@ -35,20 +35,19 @@ export interface OrderSubitemInputV3 {
 
 export default class Cart {
     public type: "takeout" | "delivery";
-    public payment_type: "fondy" | "terminal" | "cash";
+    public paymentType: "fondy" | "terminal" | "cash";
 
     public customer: OrderCustomerInputV3;
     public deliveryAddress?: OrderDeliveryAddressInputV3;
-    public expected_time?: number;
-    public takeout_address_id?: number;
-
+    public expectedTime?: number;
+    public takeoutAddressId?: number;
     public message?: string;
 
     public items: OrderItemInputV3[];
 
     constructor() {
         this.type = "takeout";
-        this.payment_type = "cash";
+        this.paymentType = "cash";
 
         this.customer = {
             name: "",
@@ -111,11 +110,11 @@ export default class Cart {
     buildOrder(): OrderInputV3 {
         return {
             type: this.type,
-            payment_type: this.payment_type,
+            payment_type: this.paymentType,
             customer: this.customer,
             delivery_address: this.deliveryAddress,
-            expected_time: this.expected_time,
-            takeout_address_id: this.takeout_address_id,
+            expected_time: this.expectedTime,
+            takeout_address_id: this.takeoutAddressId,
             items: this.items,
             message: this.message
         } as OrderInputV3;

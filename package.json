@@ -1,6 +1,6 @@
 {
   "name": "@storinka/cart",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Cart module for Storinka skins.",
   "main": "index.js",
   "repository": "https://github.com/storinka/cart",
