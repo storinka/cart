@@ -1,51 +1,50 @@
-export interface OrderInput {
+export interface OrderInputV3 {
     type: "takeout" | "delivery";
     payment_type: "fondy" | "terminal" | "cash";
-    customer: OrderCustomerInput;
+    customer: OrderCustomerInputV3;
     message?: null | string;
-    delivery_address?: null | OrderDeliveryAddressInput;
+    delivery_address?: null | OrderDeliveryAddressInputV3;
     takeout_address_id?: null | number;
     expected_time?: null | string;
-    items: Array<OrderItemInput>;
+    items: Array<OrderItemInputV3>;
 }
 
-export interface OrderCustomerInput {
+export interface OrderCustomerInputV3 {
     name: string;
     phone: string;
 }
 
-export interface OrderDeliveryAddressInput {
+export interface OrderDeliveryAddressInputV3 {
     short: string;
     details?: null | string;
     lat?: null | number;
     lng?: null | number;
 }
 
-export interface OrderItemInput {
-    item_type: "dish" | "variant" | "option";
+export interface OrderItemInputV3 {
+    item_type: "dish" | "variant";
     item_id: number;
     quantity: number;
-    subitems: Array<OrderSubitemInput>;
+    subitems: Array<OrderSubitemInputV3>;
 }
 
-export interface OrderSubitemInput {
-    item_type: string;
+export interface OrderSubitemInputV3 {
+    item_type: "option";
     item_id: number;
-    quantity: number;
 }
 
 export default class Cart {
     public type: "takeout" | "delivery";
     public payment_type: "fondy" | "terminal" | "cash";
 
-    public customer: OrderCustomerInput;
-    public deliveryAddress?: OrderDeliveryAddressInput;
+    public customer: OrderCustomerInputV3;
+    public deliveryAddress?: OrderDeliveryAddressInputV3;
     public expected_time?: number;
     public takeout_address_id?: number;
 
     public message?: string;
 
-    public items: OrderItemInput[];
+    public items: OrderItemInputV3[];
 
     constructor() {
         this.type = "takeout";
@@ -66,7 +65,7 @@ export default class Cart {
         this.items = [];
     }
 
-    addItem(item: OrderItemInput): void {
+    addItem(item: OrderItemInputV3): void {
         const existingItem = this.findItem(item);
 
         if (existingItem) {
@@ -76,7 +75,7 @@ export default class Cart {
         }
     }
 
-    removeItem(item: OrderItemInput): void {
+    removeItem(item: OrderItemInputV3): void {
         const existingItem = this.findItem(item);
 
         if (existingItem) {
@@ -84,7 +83,7 @@ export default class Cart {
         }
     }
 
-    findItem(item: OrderItemInput): OrderItemInput | undefined {
+    findItem(item: OrderItemInputV3): OrderItemInputV3 | undefined {
         return this.items.find(i => {
             const sameType = i.item_type === item.item_type;
             const sameId = i.item_id === item.item_id;
@@ -103,7 +102,7 @@ export default class Cart {
         });
     }
 
-    buildOrder(): OrderInput {
+    buildOrder(): OrderInputV3 {
         return {
             type: this.type,
             payment_type: this.payment_type,
@@ -113,6 +112,6 @@ export default class Cart {
             takeout_address_id: this.takeout_address_id,
             items: this.items,
             message: this.message
-        } as OrderInput;
+        } as OrderInputV3;
     }
 }
