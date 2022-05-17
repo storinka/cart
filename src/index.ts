@@ -1,9 +1,9 @@
-export interface OrderInputV3 {
+export interface OrderInputV4 {
     type: "takeout" | "delivery";
     payment_type: "fondy" | "terminal" | "cash";
     customer: OrderCustomerInputV3;
     message?: null | string;
-    delivery_address?: null | OrderDeliveryAddressInputV3;
+    delivery_address?: null | OrderDeliveryAddressInputV4;
     takeout_address_id?: null | number;
     expected_time?: null | string;
     items: Array<OrderItemInputV3>;
@@ -14,11 +14,14 @@ export interface OrderCustomerInputV3 {
     phone: string;
 }
 
-export interface OrderDeliveryAddressInputV3 {
+export interface OrderDeliveryAddressInputV4 {
     short: string;
     details?: null | string;
     lat?: null | number;
     lng?: null | number;
+    street_name: string,
+    street_city: string,
+    house: string,
 }
 
 export interface OrderItemInputV3 {
@@ -38,7 +41,7 @@ export default class Cart {
     public paymentType: "fondy" | "terminal" | "cash";
 
     public customer: OrderCustomerInputV3;
-    public deliveryAddress?: OrderDeliveryAddressInputV3;
+    public deliveryAddress?: OrderDeliveryAddressInputV4;
     public expectedTime?: number;
     public takeoutAddressId?: number;
     public message?: string;
@@ -59,6 +62,9 @@ export default class Cart {
             lat: 0,
             lng: 0,
             details: "",
+            street_name: "",
+            street_city: "",
+            house: "",
         };
 
         this.items = [];
@@ -107,7 +113,7 @@ export default class Cart {
         return subitem1.item_type === subitem2.item_type && subitem1.item_id === subitem2.item_id;
     }
 
-    buildOrder(): OrderInputV3 {
+    buildOrder(): OrderInputV4 {
         return {
             type: this.type,
             payment_type: this.paymentType,
@@ -117,6 +123,6 @@ export default class Cart {
             takeout_address_id: this.takeoutAddressId,
             items: this.items,
             message: this.message
-        } as OrderInputV3;
+        } as OrderInputV4;
     }
 }
