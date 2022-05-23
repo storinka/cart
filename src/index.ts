@@ -22,6 +22,9 @@ export interface OrderDeliveryAddressInputV4 {
     street_name: string,
     street_city: string,
     house: string,
+    flat?: null | string,
+    floor?: null | string,
+    entrance?: null | string,
 }
 
 export interface OrderItemInputV3 {
